@@ -59,7 +59,12 @@ kernel_values() {
 ui_additional_packages_values() {
 	case "$1" in
 		phosh)
-			echo "firefox"
+			echo "
+				firefox
+				gedit
+				gnome-calculator
+				gnome-clocks
+			"
 			;;
 	esac
 }
