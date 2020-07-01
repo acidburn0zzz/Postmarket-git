@@ -273,10 +273,11 @@ build_image() {
 	QUEUE_CURRENT=$((QUEUE_CURRENT+1))
 	echo "[$QUEUE_CURRENT/$QUEUE_TOTAL] $filename.xz"
 
-	# Configure device, ui
+	# Various pmbootstrap configurations
 	pmbootstrap -q config device "$device"
 	pmbootstrap -q config ui "$ui"
 	pmbootstrap -q config kernel "$kernel"
+	pmbootstrap -q config hostname "$device"
 
 	# Build "pmbootstrap install" command
 	install_args=""
