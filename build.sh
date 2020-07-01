@@ -289,7 +289,7 @@ build_image() {
 	if [ "$3" -eq 1 ]; then
 		install_args="$install_args--ondev "
 	fi
-	add="$(ui_additional_packages_values "$ui" | tr ' ' ',')"
+	add="$(ui_additional_packages_values "$ui" | xargs | tr ' ' ',')"
 	if [ -n "$add" ]; then
 		install_args="$install_args--add=$add "
 	fi
