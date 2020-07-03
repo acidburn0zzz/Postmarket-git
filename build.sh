@@ -18,6 +18,8 @@ DATE="$(date +%Y%m%d)"
 PMAPORTS_DIR="" # Filled in pmbootstrap_prepare()
 WORK_DIR="" # Filled in pmbootstrap_prepare()
 IMAGES_DIR="$(realpath "$(dirname "$0")")/out"
+CONFIG=~/.config/pmbootstrap-images.cfg
+PMBOOTSTRAP="$(which pmbootstrap)"
 
 # Configuration: devices
 device_values() {
@@ -97,13 +99,21 @@ check_env() {
 	fi
 }
 
+pmbootstrap() {
+	"$PMBOOTSTRAP" -c "$CONFIG" "$@"
+}
+
+pmbootstrap_default_cfg() {
+	"$PMBOOTSTRAP" "$@"
+}
+
 pmbootstrap_prepare() {
 	echo ":: prepare pmbootstrap"
-	pmbootstrap work_migrate
+	pmbootstrap_default_cfg work_migrate
 
 	# Fill PMAPORTS_DIR, WORK_DIR
-	PMAPORTS_DIR="$(pmbootstrap -q config aports)"
-	WORK_DIR="$(pmbootstrap -q config work)"
+	PMAPORTS_DIR="$(pmbootstrap_default_cfg -q config aports)"
+	WORK_DIR="$(pmbootstrap_default_cfg -q config work)"
 	if ! [ -d "$PMAPORTS_DIR" ]; then
 		echo "ERROR: failed to determine pmaports dir"
 		exit 1
@@ -115,9 +125,9 @@ pmbootstrap_prepare() {
 
 	# Overwrite pmbootstrap.cfg to be sure that we don't have unexpected
 	# options set
-	JOBS="$(pmbootstrap -q config jobs)"
-	CCACHE_SIZE="$(pmbootstrap -q config ccache_size)"
-	cat <<-EOF > ~/.config/pmbootstrap.cfg
+	JOBS="$(pmbootstrap_default_cfg -q config jobs)"
+	CCACHE_SIZE="$(pmbootstrap_default_cfg -q config ccache_size)"
+	cat <<-EOF > "$CONFIG"
 	[pmbootstrap]
 	aports = $PMAPORTS_DIR
 	ccache_size = $CCACHE_SIZE
