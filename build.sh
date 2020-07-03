@@ -128,7 +128,7 @@ pmbootstrap_prepare() {
 	device = qemu-amd64
 	extra_packages = none
 	hostname = none
-	install_build_pkgs = False
+	build_pkgs_on_install = False
 	is_default_channel = False
 	kernel =
 	keymap =
