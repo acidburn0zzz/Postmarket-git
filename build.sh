@@ -151,10 +151,6 @@ pmbootstrap_prepare() {
 	user = user
 	EOF
 
-	if [ "$POSTMARKETOS_ALLOW_LOCAL_PKGS" != "1" ]; then
-		pmbootstrap -q -y zap -p
-	fi
-
 	cd "$PMAPORTS_DIR"
 }
 
