@@ -206,13 +206,15 @@ fill_queue_with_image() {
 	verify_ui "$2"
 	verify_ondev "$3"
 
-	local filename_xz="$(get_filename "$1" "$2" "$3" "$4").xz"
-	if [ -e "$IMAGES_DIR/$1/$filename_xz" ]; then
-		echo "- $filename_xz (exists, skipping)"
+	local filename="$(get_filename "$1" "$2" "$3" "$4")"
+	[ -z "$NO_COMPRESS" ] && filename="$filename.xz"
+
+	if [ -e "$IMAGES_DIR/$1/$filename" ]; then
+		echo "- $filename (exists, skipping)"
 		return
 	fi
 
-	echo "- $filename_xz"
+	echo "- $filename"
 
 	QUEUE="$QUEUE
 		build_image $1 $2 $3 $4
@@ -263,7 +265,7 @@ build_image() {
 	local log="$IMAGES_DIR/$device/$filename.log"
 
 	QUEUE_CURRENT=$((QUEUE_CURRENT+1))
-	echo "[$QUEUE_CURRENT/$QUEUE_TOTAL] $filename.xz"
+	echo "[$QUEUE_CURRENT/$QUEUE_TOTAL] $filename"
 
 	# Various pmbootstrap configurations
 	pmbootstrap -q config device "$device"
@@ -305,10 +307,13 @@ build_image() {
 		| pmbootstrap --log="$log" -q install $install_args
 
 	# Copy and compress resulting image (-T0: multithreading)
-	echo "  xz $filename"
+	echo "  copy from chroot"
 	cp "$WORK_DIR/chroot_native/home/pmos/rootfs/$device.img" \
 		"$IMAGES_DIR/$device/$filename"
-	xz -T0 "$IMAGES_DIR/$device/$filename"
+	if [ -z "$NO_COMPRESS" ]; then
+	echo "  xz $filename"
+		xz -T0 "$IMAGES_DIR/$device/$filename"
+	fi
 }
 
 run_queue() {
