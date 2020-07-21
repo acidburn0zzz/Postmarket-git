@@ -1,0 +1,16 @@
+pkgname=firmware-anx7688
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for Analogix controllers"
+url="https://megous.com/git/linux-firmware"
+arch="aarch64"
+license="proprietary"
+options="!check !strip !archcheck"
+source="anx7688-fw.bin"
+
+package() {
+	install -Dm644 "$srcdir"/anx7688-fw.bin "$pkgdir"/lib/firmware/anx7688-fw.bin
+}
+
+
+sha512sums="53827fbdb0c8323311ae7f50da0d55fd50096f2799f1743c74da039b57f2d603931ca1715e5530e9daf096b6be15ecbe30b0a362f892e2de5a1722847a43a919  anx7688-fw.bin"
