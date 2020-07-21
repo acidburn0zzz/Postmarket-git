@@ -87,11 +87,9 @@ build_factory_apks() {
 		return
 	fi
 
-	echo "## build factory apks (1/3): osimage-pmos-systemimage"
-	pmbootstrap_reset
-
 	# Build postmarketos-boot-factorytest and depends
 	echo "## build factory apks (1/2): postmarketos-boot-factorytest"
+	pmbootstrap_reset
 	pmbootstrap build --arch="$ARCH" postmarketos-boot-factorytest
 
 	# Build osimage from layer 2 image
