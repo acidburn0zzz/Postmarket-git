@@ -106,7 +106,7 @@ build_factory_apks() {
 		build \
 		--src="$TEMP_DIR" \
 		--arch="$ARCH" \
-		osimage-pmos-systemimage
+		osimage
 
 	cd "$TOPDIR"
 	rm -rf "$TEMP_DIR"
