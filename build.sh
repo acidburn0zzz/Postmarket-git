@@ -52,25 +52,6 @@ kernel_values() {
 	esac
 }
 
-# Configuration: additional packages per user interface
-# These packages make sense with a given UI, but are not part of the
-# postmarketos-ui-* package, as they could not be uninstalled then (pmb#1933).
-# For consistency with the other *_values() functions above, the values should
-# be separated with spaces.
-# $1: UI
-ui_additional_packages_values() {
-	case "$1" in
-		phosh)
-			echo "
-				firefox
-				gedit
-				gnome-calculator
-				gnome-clocks
-			"
-			;;
-	esac
-}
-
 # Configuration: on-device installer
 # Build with disabled and enabled on-device installer by default
 ondev_values() {
@@ -294,10 +275,6 @@ build_image() {
 	install_args=""
 	if [ "$3" -eq 1 ]; then
 		install_args="$install_args--ondev "
-	fi
-	add="$(ui_additional_packages_values "$ui" | xargs | tr ' ' ',')"
-	if [ -n "$add" ]; then
-		install_args="$install_args--add=$add "
 	fi
 	if [ "$POSTMARKETOS_ALLOW_LOCAL_PKGS" != "1" ]; then
 		install_args="$install_args--no-local-pkgs "
