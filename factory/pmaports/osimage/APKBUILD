@@ -1,0 +1,17 @@
+# pine64-pinephone.sh uses this with 'pmbootstrap build --src' in a dir where
+# all files exist.
+
+pkgname=osimage
+pkgver=1
+pkgrel=0
+pkgdesc="Flashable image for factorytest"
+url="https://postmarketos.org"
+arch="noarch"
+options="!check"
+license=" GPL-3.0-or-later"
+
+package() {
+	for file in label.txt filesize.txt os.img.xz os.img.bmap; do
+		install -Dm644 "$file" "$pkgdir/usr/share/factorytest/$file"
+	done
+}

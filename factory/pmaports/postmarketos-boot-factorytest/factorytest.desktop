@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Factory test
+Comment=Factory testing utility for the PinePhone
+Exec=cage run-factorytest
+Type=Application

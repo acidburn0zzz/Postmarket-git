@@ -1,0 +1,34 @@
+# Contributor: Martijn Braam
+pkgname=postmarketos-boot-factorytest
+pkgver=0.1
+pkgrel=0
+pkgdesc="Boot into a TTY running hwtest"
+url="https://gitlab.com/MartijnBraam/hwtest"
+arch="all"
+license="MIT"
+depends="factorytest cage lightdm lightdm-openrc elogind i2c-tools"
+install="$pkgname.post-install"
+source="
+	factorytest.desktop
+	run-factorytest.sh
+	60-lightdm-autologin.conf
+	sudoers
+"
+options="!check"
+
+package() {
+	mkdir -p $pkgdir
+	install -D -m664 "$srcdir"/60-lightdm-autologin.conf \
+		"$pkgdir"/usr/share/lightdm/lightdm.conf.d/60-autologin.conf
+	install -D -m664 "$srcdir"/sudoers \
+		"$pkgdir"/etc/sudoers.d/demo
+	install -D -m755 "$srcdir"/run-factorytest.sh \
+		"$pkgdir"/usr/bin/run-factorytest
+	install -D -m755 "$srcdir"/factorytest.desktop \
+		"$pkgdir"/usr/share/wayland-sessions/factorytest.desktop
+}
+
+sha512sums="5166b287bfddf8ab40379c531ac205e8e12975d58b7dac2edb27217311a6622a7f6f49059bef43fd62423b225de407211f5716b6227e4197351554742b8e479e  factorytest.desktop
+c69308da344821dfe583b10bd28f254123eca9bc7f09a24a291433532586b0dcdf926cce694e46394964d1454d9027d7ad146d589a57c1259820d84e4b3e25ff  run-factorytest.sh
+72c4770b02bd49a820d64efa24014d5a583d13bb89f8d118bd1c1be84aed0516ce50f89872403d921d6c69efd72fb55d7ebd527bc9e0d113beb454b592ace38d  60-lightdm-autologin.conf
+6493079e99fd9f129f6ef3b001c69f9ec108985009e7b29497eb18506f7153f3c70ef034db4b2cd7b1f8f2e6a2da4ac71be3e001441c0b0bef2bf2c81c8bd7fe  sudoers"
