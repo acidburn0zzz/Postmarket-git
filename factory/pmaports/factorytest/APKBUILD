@@ -1,7 +1,7 @@
 # Maintainer: Martijn Braam <martijn@brixit.nl>
 pkgname=factorytest
 _pyname=factorytest_pinephone
-pkgver=0.49.0
+pkgver=0.55.0
 pkgrel=0
 pkgdesc="Factory test tool for the PinePhone"
 url="https://gitlab.com/MartijnBraam/factorytest"
@@ -22,4 +22,4 @@ build() {
 package() {
 	python3 setup.py install --prefix=/usr --root="$pkgdir"
 }
-sha512sums="a90cd6a8d4e8db73b145f333b89517ddec0c7073fe673f3c7facae4c883307f21a69ce1105d4284d4dd72708d33aadfb4c66e748ef9ca290d70025ac1cfc7e19  factorytest-0.49.0.tar.gz"
+sha512sums="0183781717241d528eca799f48fb854e86ddfce47f324c35e4c97246fe515550b16054a0647a6d220e961c275833b5eda8728e3e9bf22928361c54440445196e  factorytest-0.55.0.tar.gz"
