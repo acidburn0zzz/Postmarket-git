@@ -33,7 +33,7 @@ ui_values() {
 	[ -n "$UI" ] && echo "$UI" && return
 	case "$1" in
 		nokia-n900) echo "i3wm" ;;
-		*) echo "phosh plasma-mobile" ;;
+		*) echo "phosh plasma-mobile sxmo" ;;
 	esac
 }
 
