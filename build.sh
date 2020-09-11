@@ -70,11 +70,12 @@ check_usage() {
 	fi
 }
 
-check_env() {
+set_build_pkgs_on_install() {
 	if [ "$POSTMARKETOS_ALLOW_LOCAL_PKGS" = "1" ]; then
 		echo "WARNING: POSTMARKETOS_ALLOW_LOCAL_PKGS is set." \
 			"Locally built packages and installation keys will" \
 			"be included in the installation image!"
+		pmbootstrap -q config build_pkgs_on_install True
 	fi
 }
 
@@ -255,8 +256,8 @@ run_queue() {
 }
 
 check_usage
-check_env
 pmbootstrap_prepare
+set_build_pkgs_on_install
 checkout_branch
 fill_queue_with_images
 run_queue
