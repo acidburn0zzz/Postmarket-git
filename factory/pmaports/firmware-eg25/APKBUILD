@@ -1,0 +1,29 @@
+pkgname=firmware-eg25
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for the Quectel EG25 modem"
+makedepends="zstd"
+url="https://megous.com/git/linux-firmware"
+arch="aarch64"
+license="proprietary"
+options="!check !strip !archcheck"
+source="$pkgname-$pkgver.tar.zst::https://universe2.us/collector/newfw.tar.zst"
+
+prepare() {
+	default_prepare
+
+	cd "$srcdir"
+	tar -I zstd -xf "$pkgname-$pkgver.tar.zst"
+	rm "$srcdir"/newfw/*.pdf
+	echo "EG25GGBR07A08M2G_01.002.07" > "$srcdir"/version.txt
+}
+
+package() {
+	ls -lah $srcdir
+	mkdir -p "$pkgdir"/usr/share/modemfw
+	cp -rv "$srcdir"/newfw "$pkgdir"/usr/share/modemfw/fwdir
+	cp "$srcdir"/version.txt "$pkgdir"/usr/share/modemfw/version.txt
+}
+
+
+sha512sums="3b4e4082e1b945e1b4474f5f383b2fb8303807af17204740b9e60793f40719fe440e2b5524de7cc0dad82afce33038dc8b8d495737ea4964be9521e4b93e491b  firmware-eg25-1.tar.zst"

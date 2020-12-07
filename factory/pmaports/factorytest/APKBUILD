@@ -1,13 +1,13 @@
 # Maintainer: Martijn Braam <martijn@brixit.nl>
 pkgname=factorytest
 _pyname=factorytest_pinephone
-pkgver=0.55.0
+pkgver=0.64.0
 pkgrel=0
 pkgdesc="Factory test tool for the PinePhone"
 url="https://gitlab.com/MartijnBraam/factorytest"
 arch="noarch"
 license="MIT"
-depends="python3 py3-gobject3 gtk+3.0 py3-wifi py3-smbus py3-serial alsa-utils py3-setuptools v4l-utils xz imagemagick firmware-anx7688"
+depends="python3 py3-gobject3 gtk+3.0 py3-wifi py3-smbus py3-serial alsa-utils py3-setuptools v4l-utils xz imagemagick firmware-anx7688 qfirehose firmware-eg25"
 makedepends="py3-setuptools"
 _pypiprefix="${_pyname%${_pyname#?}}"
 source="
@@ -22,4 +22,4 @@ build() {
 package() {
 	python3 setup.py install --prefix=/usr --root="$pkgdir"
 }
-sha512sums="0183781717241d528eca799f48fb854e86ddfce47f324c35e4c97246fe515550b16054a0647a6d220e961c275833b5eda8728e3e9bf22928361c54440445196e  factorytest-0.55.0.tar.gz"
+sha512sums="6833017607acb90a48f7e88f4421765af12bbf5d77c8d3edf00e7bd6c3fa55deccb04456cf3e9ed9f33a76735744522f215af1488b394a5a25063d567790f304  factorytest-0.64.0.tar.gz"

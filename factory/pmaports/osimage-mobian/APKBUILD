@@ -1,0 +1,36 @@
+# pine64-pinephone.sh uses this with 'pmbootstrap build --src' in a dir where
+# all files exist.
+
+pkgname=osimage-mobian
+pkgver=1
+pkgrel=0
+pkgdesc="Flashable image for factorytest"
+url="https://postmarketos.org"
+arch="noarch"
+options="!check"
+makedepends="wget xz"
+license=" GPL-3.0-or-later"
+source="
+https://images.mobian-project.org/pinephone/installer/mobian-installer-pinephone-phosh-alpha2.img.gz
+https://images.mobian-project.org/pinephone/installer/mobian-installer-pinephone-phosh-alpha2.img.bmap
+"
+
+build() {
+	cd "$srcdir"
+	echo "Mobian phosh alpha2" > "$srcdir"/label.txt
+	echo "Decompressing gz"
+	gunzip *.img.gz
+	mv *.img os.img
+	echo "Recompressing as xz"
+	xz os.img
+	mv *.bmap os.img.bmap
+}
+
+package() {
+	cd "$srcdir"
+	for file in label.txt os.img.xz os.img.bmap; do
+		install -Dm644 "$file" "$pkgdir/usr/share/factorytest/$file"
+	done
+}
+sha512sums="3267233a98a7eb412bed5aeebcd2dd17fb0e688ca682caacdec73914a7d854f89974f7dae235345a7e6d3d114bc20575f08c2d9230650f92799aa0305cd77550  mobian-installer-pinephone-phosh-alpha2.img.gz
+37ffd34946b37ed0679e07d75803fa3267dd8744b95bb325f0dd6e72edc70822ccaec0ba878ad896e154f3fa33636531d8022c38590b1be902f3237d62bcdc8d  mobian-installer-pinephone-phosh-alpha2.img.bmap"

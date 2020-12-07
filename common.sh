@@ -61,6 +61,8 @@ pmbootstrap_prepare() {
 	EOF
 
 	cd "$PMAPORTS_DIR"
+
+	pmbootstrap update
 }
 
 checkout_branch() {

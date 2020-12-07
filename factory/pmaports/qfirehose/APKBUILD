@@ -1,0 +1,23 @@
+pkgname=qfirehose
+pkgver=0_git20201112
+pkgrel=0
+_commit="2fed877d027af59ada44b82fe616bba1288296b3"
+pkgdesc="Quectel flashing tool"
+options="!check"
+url="https://github.com/pmsourcedump/qfirehose"
+arch="all"
+license="propriatary"
+depends=""
+makedepends="linux-headers"
+source="https://github.com/pmsourcedump/qfirehose/archive/$_commit.tar.gz"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make
+}
+
+package() {
+	install -D -m755 "QFirehose" "$pkgdir"/usr/bin/QFirehose
+}
+
+sha512sums="85ec4ae4ffbd6211525abd4d2368c4ad5dfd152826af2d1532102b812fc53ff59dea53917a382d1e14fea7af75fe674932a6b4df403784aaf94b2d15ba5dd39e  2fed877d027af59ada44b82fe616bba1288296b3.tar.gz"
