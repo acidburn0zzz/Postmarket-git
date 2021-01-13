@@ -1,0 +1,32 @@
+# pine64-pinephone.sh uses this with 'pmbootstrap build --src' in a dir where
+# all files exist.
+
+pkgname=osimage-kde
+pkgver=3
+pkgrel=0
+pkgdesc="Flashable image for factorytest"
+url="https://postmarketos.org"
+arch="noarch"
+options="!check"
+makedepends="wget xz"
+license=" GPL-3.0-or-later"
+source="
+os.img.xz
+"
+
+build() {
+	cd "$srcdir"
+	echo "6125780992" > "$srcdir"/filesize.txt
+	echo "KDE 201207.3.1" > "$srcdir"/label.txt
+}
+
+package() {
+	cd "$srcdir"
+	for file in label.txt os.img.xz filesize.txt; do
+		echo "Installing $file"
+		install -Dm644 "$file" "$pkgdir/usr/share/factorytest/$file"
+	done
+	ls -lah "$srcdir"
+	ls -lah "$pkgdir"/usr/share/factorytest
+}
+sha512sums="1d14caa2f627a97bb91985b6b7736b28933e3cb1afd140103f6423871ed3f3de23fe1c74b0676d7bacc12ec5df188a54e028cd4eb5a236306074a69a1ea22b94  os.img.xz"
